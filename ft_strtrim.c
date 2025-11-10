@@ -12,12 +12,14 @@
 
 #include "libft.h"
 
-int	is_in_set(char c, const char *set)
+static int	in_set(char c, const char *set)
 {
 	size_t	i;
 
+	if (!set)
+		return (0);
 	i = 0;
-	while (set[i])
+	while (set[i] != '\0')
 	{
 		if (set[i] == c)
 			return (1);
@@ -26,47 +28,28 @@ int	is_in_set(char c, const char *set)
 	return (0);
 }
 
-size_t	len_trimmed(const char *s1, const char *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
-	size_t	count;
+	size_t	end;
+	size_t	len;
+	char	*out;
 
-	start = 0;
-	count = 0;
-	while (s1[start])
-	{
-		if (is_in_set(s1[start], set))
-			count++;
-		start++;
-	}
-	return (count);
-}
-
-char	*ft_strtrim(const char *s1, const char *set)
-{
-	char	*trimmed;
-	size_t	size_trimmed;
-	size_t	i;
-
-	if (!set)
-		return ((char *)s1);
 	if (!s1)
 		return (NULL);
-	size_trimmed = ft_strlen(s1) - len_trimmed(s1, set);
-	trimmed = (char *)malloc(sizeof(char) * (size_trimmed + 1));
-	if (!trimmed)
+	if (!set || *set == '\0')
+		return (ft_strdup(s1));
+	start = 0;
+	while (s1[start] != '\0' && in_set(s1[start], set))
+		start++;
+	end = ft_strlen(s1);
+	while (end > start && in_set(s1[end - 1], set))
+		end--;
+	len = end - start;
+	out = (char *)malloc(sizeof(char) * (len + 1));
+	if (!out)
 		return (NULL);
-	i = 0;
-	size_trimmed = 0;
-	while (s1[i])
-	{
-		if (!is_in_set(s1[i], set))
-		{
-			trimmed[size_trimmed] = s1[i];
-			size_trimmed++;
-		}
-		i++;
-	}
-	trimmed[size_trimmed] = '\0';
-	return (trimmed);
+	ft_memcpy(out, s1 + start, len);
+	out[len] = '\0';
+	return (out);
 }

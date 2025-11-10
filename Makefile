@@ -1,21 +1,32 @@
-FILES = srcs/ft_putchar.c srcs/ft_swap.c srcs/ft_putstr.c srcs/ft_strlen.c srcs/ft_strcmp.c
+NAME    = libft.a
 
-OBJECTS = srcs/ft_putchar.o srcs/ft_swap.o srcs/ft_putstr.o srcs/ft_strlen.o srcs/ft_strcmp.o
+CC      = gcc
+CFLAGS  = -Wall -Wextra -Werror
+AR      = ar
+ARFLAGS = rcs
+RM      = rm -f
 
-TARGET = libft.a
 
-all :$(TARGET)
+SRCS        := $(wildcard *.c)
+OBJS        := $(SRCS:.c=.o)
 
-$(TARGET) : $(OBJECTS)
-	ar rc $(TARGET) $(OBJECTS)
+INCS    = libft.h
 
-%.o : %.c includes/ft.h
-	cc -Wall -Wextra -Werror -I includes -c $< -o $@
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+
+
+%.o: %.c $(INCS)
+	$(CC) $(CFLAGS) -I . -c $< -o $@
 
 clean:
-	rm -rf $(OBJECTS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -rf $(TARGET)
+	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	is_separator(char c, char *sep)
+static	int	is_separator(char c, char *sep)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	is_separator(char c, char *sep)
 	return (0);
 }
 
-int	count_words(char *str, char *sep)
+static	int	count_words(char *str, char *sep)
 {
 	int	i;
 	int	count;
@@ -47,7 +47,7 @@ int	count_words(char *str, char *sep)
 	return (count);
 }
 
-char	*word_splitter(char *str, char *sep)
+static	char	*word_splitter(char *str, char *sep)
 {
 	char	*words;
 	int		i;
