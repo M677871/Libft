@@ -14,6 +14,28 @@
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
-	size_t  sizeS1;
-    size_t  ;
+	char	*joined;
+	size_t	size_s1;
+    size_t	size_s2;
+	size_t	i;
+
+    size_s1 = ft_strlen(s1);
+    size_s2 = ft_strlen(s2);
+	joined = (char *)malloc(sizeof(char) * (size_s1 + size_s2 + 1));
+	if (!joined)
+		return (NULL);
+	i = 0;
+	while (i < size_s1)
+	{
+		joined[i] = s1[i];
+		i++;
+	}
+	i = 0;
+	while (i < size_s2)
+	{
+		joined[size_s1 + i] = s2[i];
+		i++;
+	}
+	joined[size_s1 + size_s2] = '\0';
+	return (joined);
 }
