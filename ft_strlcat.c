@@ -12,27 +12,22 @@
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dest, char *src, size_t size)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	size_t	len_d;
-	size_t	len_s;
-	size_t	result;
+	size_t	dest_len;
+	size_t	src_len;
 	size_t	i;
 
-	len_d = ft_strlen(dest);
-	len_s = ft_strlen(src);
-	if (size > len_d)
-		result = len_s + len_d;
-	else
-		result = len_s + size;
+	src_len = ft_strlen(src);
+	dest_len = ft_strlen(dest);
+	if (size <= dest_len)
+		return (size + src_len);
 	i = 0;
-	while (src[i] && (len_d + 1 < size))
+	while (src[i] && (dest_len + i + 1) < size)
 	{
-		dest[len_d] = src[i];
-		len_d++;
+		dest[dest_len + i] = src[i];
 		i++;
 	}
-	if (len_d < size)
-		dest[len_d] = '\0';
-	return (result);
+	dest[dest_len + i] = '\0';
+	return (dest_len + src_len);
 }
